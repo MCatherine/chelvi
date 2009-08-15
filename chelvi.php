@@ -20,9 +20,12 @@
   /**
    * Chelvi is object oriented cute PHP framework
    * @author Aravinda VK (hallimanearavind AT gmail DOT com)
-   * @version 0.0.1
+   * @version 0.0.2
    * @date 2009-05-23
    */
+
+// Version 
+define('CHELVI_VERSION','0.0.2');
 
 // Global settings for error and exception handling
 error_reporting(0);
@@ -40,6 +43,19 @@ class chelvi{
     static $error='error';
     static $key = 'o';
     static $numberOfInstances = 0;
+
+    /*
+     * This function helps in getting the version Number
+     *
+     * @description Prints the version number
+     * Usage:  echo chelvi::version();
+     * 
+     * @param None
+     * @return Displays version number
+     */
+    function version(){
+        return CHELVI_VERSION;
+    }
 
     /**
      * maps Every valid URL to function, redirect to error page if not exists
@@ -248,10 +264,10 @@ class chelvi{
         }
 
         // Client Details
-        $clientDetails = $_SERVER['REMOTE_ADDR'].' '.$_SERVER['REMOTE_HOST'].
+        $clientDetails = $_SERVER['REMOTE_ADDR'].' '.(isset($_SERVER['REMOTE_HOST']) ? $_SERVER['REMOTE_HOST'] : '').
             ' "'.$_SERVER['REQUEST_METHOD'].' '.$_SERVER['REQUEST_URI'].'" '.
-            ' "'.$_SERVER['HTTP_REFERER'].'" '.$_SERVER['HTTP_USER_AGENT'];
-
+            ' "'.(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '').'" '.$_SERVER['HTTP_USER_AGENT'];
+        
         // If custom log, all msgs will be added to array and displayed
         // in the end if DISPLAY_ERRORS_LOGS enabled
         if($type=='custom'){
